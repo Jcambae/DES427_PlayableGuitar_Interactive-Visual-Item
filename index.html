@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Playable Guitar </title>
+    <!-- Do NOT REMOVE script below -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/addons/p5.sound.js"> </script>
+
+
+<script> 
+
+
+
+// below is the individual objects for the audio as the array is going
+// to be used to be able to select the values (for the guitarStrings: EADGBE)
+
+
+let stringSounds;
+
+let soundPlay = false;
+
+let chordPlay = false;
+
+// let guitarChords;
+
+function preload() {
+  // Load individual string sounds
+stringSounds = [
+ loadSound('Audio/MP3/lowE.mp3'),
+ loadSound('Audio/MP3/A.mp3'),
+ loadSound('Audio/MP3/D.mp3'),
+ loadSound('Audio/MP3/G.mp3'),
+ loadSound('Audio/MP3/B.mp3'),
+ loadSound('Audio/MP3/highE.mp3')
+]; 
+
+
+
+guitarChords = [
+  loadSound('Audio/Chords/MP3/C_Chord.mp3'),
+  loadSound('Audio/Chords/MP3/D_Chord.mp3'),
+  loadSound('Audio/Chords/MP3/E_Chord.mp3'),
+  loadSound('Audio/Chords/MP3/F_Chord.mp3'),
+  loadSound('Audio/Chords/MP3/G_Chord.mp3'),
+  loadSound('Audio/Chords/MP3/A_Chord.mp3'),
+  loadSound('Audio/Chords/MP3/B_Chord.mp3'),
+];
+
+}
+
+
+
+let lines = [260, 300, 340, 380, 420, 460];
+
+function setup() {
+  createCanvas(1280, 720);
+}
+
+function draw() {
+// Simplified guitar body using rectangles
+  fill('#C4730F'); // Brownish color
+  rect(0, 0, 1280, 720); //Main body
+
+// guitar bridge
+  
+  fill(59, 35, 6);
+  strokeWeight(4);
+  stroke('black');
+  rect(450, 210, 40, 320);
+  
+  //guitar bridge spots
+  noStroke();
+  fill('white');
+  circle(470 ,260, 20);
+  fill('white');
+  circle(470 ,300, 20);
+  fill('white');
+  circle(470 ,340, 20);
+  fill('white');
+  circle(470 ,380, 20);
+  fill('white');
+  circle(470 ,420, 20);
+  fill('white');
+  circle(470 ,460, 20);
+  
+  // Sound hole
+  stroke('white');
+  fill('#8A6237');
+  circle(640 ,360, 250);
+  fill('black');
+  circle(640 ,360, 200);
+
+
+  // lines
+  stroke('gray');
+  line(450, 260, 1280, 260); 
+  stroke('gray');
+  line(450, 300, 1280, 300);
+  stroke('gray');
+  line(450, 340, 1280, 340); 
+  stroke('gray');
+  line(450, 380, 1280, 380);
+  stroke('gray');
+  line(450, 420, 1280, 420); 
+  stroke('gray');
+  line(450, 460, 1280, 460);
+  //Horizontal line across the width
+
+  //text for the individual notes of the strings
+  strokeWeight(2);
+  stroke(10);
+  textSize(40);
+  fill('#C4180F');
+  text('E', 400, 275);
+  text('A', 400, 315);
+  text('D', 400, 355);
+  text('G', 400, 395);
+  text('B', 400, 435);
+  text('E', 400, 475);
+}
+
+
+function mouseDragged() {
+  for (let i = 0; i < lines.length; i++) {
+    if (mouseY > lines[i] - 5 && mouseY < lines[i] + 5) {
+      if (!soundPlay) {
+        stringSounds[i].play();
+        soundPlay = true;
+      }
+      stroke('gold');
+      line(450, lines[i], 1280, lines[i]);
+    } else {
+      if (soundPlay) {
+        stringSounds[i].stop();
+        soundPlay = false;
+      }
+      stroke('gray');
+      line(450, lines[i], 1280, lines[i]);
+    }
+  }
+}
+
+function mouseDragged() {
+  for (let i = 0; i < lines.length; i++) {
+    if (mouseY > lines[i] - 5 && mouseY < lines[i] + 5) {
+      if (!soundPlay) {
+        stringSounds[i].play();
+        soundPlay = true;
+      }
+      stroke('gold');
+      line(450, lines[i], 1280, lines[i]);
+    } else {
+      if (soundPlay) {
+        stringSounds[i].stop();
+        soundPlay = false;
+      }
+      stroke('gray');
+      line(450, lines[i], 1280, lines[i]);
+    }
+  }
+}
+
+function keyPressed() {
+  if (key === 'a' || key === 'A') {
+    if (!chordPlay) {
+      guitarChords[0].play();
+      chordPlay = true;
+    } else {
+      guitarChords[0].stop();
+      chordPlay = false;
+    }
+  } else if (key === 's' || key === 'S') {
+    if (!chordPlay) {
+      guitarChords[1].play();
+      chordPlay = true;
+    } else {
+      guitarChords[1].stop();
+      chordPlay = false;
+    }
+  } else if (key === 'd' || key === 'D') {
+    if (!chordPlay) {
+      guitarChords[2].play();
+      chordPlay = true;
+    } else {
+      guitarChords[2].stop();
+      chordPlay = false;
+    }
+  } else if (key === 'f' || key === 'F') {
+    if (!chordPlay) {
+      guitarChords[3].play();
+      chordPlay = true;
+    } else {
+      guitarChords[3].stop();
+      chordPlay = false;
+    }
+  } else if (key === 'g' || key === 'G') {
+    if (!chordPlay) {
+      guitarChords[4].play();
+      chordPlay = true;
+    } else {
+      guitarChords[4].stop();
+      chordPlay = false;
+    }
+  } else if (key === 'h' || key === 'H') {
+    if (!chordPlay) {
+      guitarChords[5].play();
+      chordPlay = true;
+    } else {
+      guitarChords[5].stop();
+      chordPlay = false;
+    }
+  } else if (key === 'j' || key === 'J') {
+    if (!chordPlay) {
+      guitarChords[6].play();
+      chordPlay = true;
+    } else {
+      guitarChords[6].stop();
+      chordPlay = false;
+    }
+  } 
+}
+
+
+</script>
+
+<h1> Try playing the guitar below! Use your mouse to pluck the strings and then 
+    use your keyboard to play some chords!</h1>
+
+    <h2>for the chords use the following keys on your keyboard!: 'a', 's', 'd', 'f', 'g', 'h', and 'j'</h2>
+
+</head>
+
+
+
+
+<body>
+
+
+
+
+</body>
+
+
+
+</html>
